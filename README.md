@@ -7,11 +7,6 @@ A Visual Regression Testing library for Figma.
 
 ## Config
 
-Create a new config file
-```
-mv config.js.example config.js
-```
-
 In your config.js, enter your FIGMA API KEY and the FILE ID of your Figma file.
 
 ## How It Works
