@@ -1,6 +1,6 @@
 {
   "name": "figma-vrt-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Mark Anthony Cianfrani @markacianfrani",
   "bin": {
     "figma-vrt": "./bin/run"
@@ -49,7 +49,10 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.3",
     "axios": "^0.24.0",
+    "delay": "^5.0.0",
     "fs-extra": "^10.0.0",
+    "listr": "^0.14.3",
+    "listr2": "^3.13.1",
     "tslib": "^1.14.1"
   }
 }
