@@ -1,7 +1,7 @@
 const axios = require('axios')
 
-const API_KEY = "yeah right buddy";
-const FILE_ID = "";
+const API_KEY = "";
+const FILE_ID = ""; // api
 
 export class Client {
   client: any;
@@ -37,7 +37,7 @@ export class Client {
     })
   }
 
-  async getNodeAsPng(nodeId: string | [] ) {
+  async getNodeAsPng(nodeId: string | string[] ) {
     return this.client(`images/${FILE_ID}?ids=${nodeId}&format=png`)
     .then((r: any) => {
       return r.data.images

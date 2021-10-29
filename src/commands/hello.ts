@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import { Client } from "../client";
-const fs = require("fs");
+const fs = require("fs-extra");
 const https = require("https"); // or 'https' for https:// URLs
 
 import cli from "cli-ux";
@@ -31,31 +31,41 @@ hello world from ./src/hello.ts!
     const { args, flags } = this.parse(Hello);
     let mode = "base";
     if (args.file) {
-      mode = args.file
+      mode = args.file;
     }
 
-    const dir = `data/${mode}`
+    const dir = `data/${mode}`;
 
+    this.log("Snapshoting Base")
     cli.action.start("Fetching pages");
 
     const pages = await client.getPages();
     cli.action.stop(`Found ${pages.length} pages`); // shows 'starting a process... done'
 
     cli.action.start("Fetching Pngs");
-    const ids = pages.map((page: any) => {
-      return page.id
-    })
+    let pageNames = pages.reduce((ac: any, a: any) => {
+      return { ...ac, [a.id]: a.name };
+    }, {});
+
+
+    const ids = Object.keys(pageNames)
+
     const images = await client.getNodeAsPng(ids);
+
     cli.action.stop("Pages Got");
 
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir, { recursive: true });
     }
+    await fs.remove(dir)
 
     for (const image in images) {
       if (images[image]) {
-        const file = fs.createWriteStream(`data/${mode}/${image}.png`);
-        const request = https.get(`${images[image]}`, function (response: any) {
+        const pageName = pageNames[image].replace(/ /g,'-').toLowerCase();
+        console.log('page', pageName );
+
+        const file = fs.createWriteStream(`data/${mode}/${pageName}.png`);
+        https.get(`${images[image]}`, function (response: any) {
           response.pipe(file);
         });
       }

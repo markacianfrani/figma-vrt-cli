@@ -49,6 +49,7 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.3",
     "axios": "^0.24.0",
+    "fs-extra": "^10.0.0",
     "tslib": "^1.14.1"
   }
 }
