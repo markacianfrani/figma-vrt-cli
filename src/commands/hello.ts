@@ -17,6 +17,8 @@ hello world from ./src/hello.ts!
   ];
 
   static flags = {
+    test: flags.boolean({ char: "t", description: "snapshot tests"}),
+    baseline: flags.boolean({ char: "b", description: "snapshot baseline"}),
     help: flags.help({ char: "h" }),
     // flag with a value (-n, --name=VALUE)
     name: flags.string({ char: "n", description: "name to print" }),
@@ -24,19 +26,23 @@ hello world from ./src/hello.ts!
     force: flags.boolean({ char: "f" }),
   };
 
-  static args = [{ name: "file" }];
+  static args = [{
+    name: "file",
+ }];
 
   async run() {
     const client = new Client();
     const { args, flags } = this.parse(Hello);
-    let mode = "base";
-    if (args.file) {
-      mode = args.file;
+    console.log('flags', flags);
+
+    let mode = "baseline";
+    if (flags.test) {
+      mode = "test"
     }
 
     const dir = `data/${mode}`;
 
-    this.log("Snapshoting Base")
+    this.log(`${mode}`)
     cli.action.start("Fetching pages");
 
     const pages = await client.getPages();
@@ -57,7 +63,9 @@ hello world from ./src/hello.ts!
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir, { recursive: true });
     }
-    await fs.remove(dir)
+
+    await fs.emptyDirSync(dir)
+    // await fs.remove(dir)
 
     for (const image in images) {
       if (images[image]) {
