@@ -1,8 +1,8 @@
 const axios = require('axios')
+const config = require('../config.js')
 
-const API_KEY = "";
-const FILE_ID = ""; // api
-
+const API_KEY = config.API_KEY
+const FILE_ID = config.FILE_ID
 export class Client {
   client: any;
 
