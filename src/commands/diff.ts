@@ -26,7 +26,7 @@ hello world from ./src/hello.ts!
 
 
   async run() {
-    const diffDir = `data/diff`;
+    const diffDir = `${process.cwd()}/data/diff`;
 
     if (!fs.existsSync(diffDir)) {
       fs.mkdirSync(diffDir, { recursive: true });
@@ -85,7 +85,7 @@ hello world from ./src/hello.ts!
       try {
         const context = await task.run();
         this.log('Tests completed!')
-      } catch (e) {
+      } catch (e: any) {
         logger.fail(e);
       }
     });

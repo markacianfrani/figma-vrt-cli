@@ -3,35 +3,42 @@ figma-vrt-cli
 
 A Visual Regression Testing library for Figma. 
 #  Installation
+
 `npm i figma-vrt-cli`
 
 ## Config
 
-In your config.js, enter your FIGMA API KEY and the FILE ID of your Figma file.
+In the root of your project, create a `config.js` file:
+```
+modules.exports = {
+  API_KEY: "YOUR FIGMA KEY",
+  FILE_ID: "YOUR FIGMA FILE ID"
+}
+```
 
 ## How It Works
 
 Similar to BackstopJS, figma-vrt will first scan your Figma file and create snapshots for each of your pages. These will be your 'baseline'.
 
 ```
-npm run snapshot
+npx figma-vrt snapshot
 ```
 
-Now that you have a baseline set, you can then go about your business in Figma, making changes, deleting colors, the whole shebang. When you're finished, you can take new snapshots:
+This will create a new data directory in the root of your project. Now that you have a baseline set, you can then go about your business in Figma, making changes, deleting colors, the whole shebang. When you're finished, you can take new snapshots:
 
 ```
-npm run snapshot -t
+npx figma-vrt snapshot -t
 ```
 
 or 
 
 ```
-npm run snapshot --test
+npx snapshot --test
 ```
 
 Finally you can run
 ```
-npm run diff
+npx figma-vrt diff
 ```
 
 to compare the two versions. 

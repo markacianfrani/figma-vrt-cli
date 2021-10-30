@@ -1,22 +1,23 @@
 const axios = require('axios')
-const config = require('../config.js')
 
-const API_KEY = config.API_KEY
-const FILE_ID = config.FILE_ID
 export class Client {
   client: any;
+  fileId: string;
 
-  constructor() {
+  constructor(apiKey: string, fileId: string) {
     this.client = axios.create({
       baseURL: `https://api.figma.com/v1/`,
-      headers: { "X-Figma-Token": API_KEY },
+      headers: { "X-Figma-Token": apiKey },
     });
+    this.fileId = fileId
+
+
   }
 
 
   async getNode(nodeId: string) {
     return this.client
-      .get(`files/${FILE_ID}/nodes?ids=${nodeId}`, {
+      .get(`files/${this.fileId}/nodes?ids=${nodeId}`, {
         //   responseType: 'stream'
       })
       .then((r: any) => {
@@ -28,7 +29,7 @@ export class Client {
   }
 
   async getPages() {
-    return this.client.get(`files/${FILE_ID}?depth=1`)
+    return this.client.get(`files/${this.fileId}?depth=1`)
     .then((r: any) => {
       return r.data.document.children
     })
@@ -38,7 +39,7 @@ export class Client {
   }
 
   async getNodeAsPng(nodeId: string | string[] ) {
-    return this.client(`images/${FILE_ID}?ids=${nodeId}&format=png`)
+    return this.client(`images/${this.fileId}?ids=${nodeId}&format=png`)
     .then((r: any) => {
       return r.data.images
     })

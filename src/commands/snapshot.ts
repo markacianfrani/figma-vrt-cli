@@ -22,15 +22,22 @@ export default class Snapshot extends Command {
   };
 
   async run() {
-    const client = new Client();
     const { args, flags } = this.parse(Snapshot);
+    const configFilePath = `${process.cwd()}/config.js`
+
+    if (!fs.existsSync(configFilePath)) {
+      throw new Error ('missing config file')
+
+    }
+    const config = require(configFilePath)
+    const client = new Client(config.API_KEY, config.FILE_ID);
 
     let mode = "baseline";
     if (flags.test) {
       mode = "test"
     }
 
-    const dir = `data/${mode}`;
+    const dir = `${process.cwd()}/data/${mode}`;
 
     this.log(`Fetching ${mode} snapshots.`)
     cli.action.start("Fetching pages");
@@ -61,7 +68,7 @@ export default class Snapshot extends Command {
       if (images[image]) {
         const pageName = pageNames[image].replace(/ /g,'-').toLowerCase();
 
-        const file = fs.createWriteStream(`data/${mode}/${pageName}.png`);
+        const file = fs.createWriteStream(`${dir}/${pageName}.png`);
         https.get(`${images[image]}`, function (response: any) {
           response.pipe(file);
         });
