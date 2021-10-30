@@ -85,7 +85,7 @@ hello world from ./src/hello.ts!
       try {
         const context = await task.run();
         this.log('Tests completed!')
-      } catch (e: any) {
+      } catch (e) {
         logger.fail(e);
       }
     });
