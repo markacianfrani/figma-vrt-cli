@@ -43,4 +43,4 @@ npx figma-vrt diff
 
 to compare the two versions. 
 
-If there any visual regressions, a new file will be created inside the `/data/diff` directory. 
+If there any visual regressions, a new file will be created inside the `/data/diff` directory.

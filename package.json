@@ -1,9 +1,9 @@
 {
   "name": "figma-vrt-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Mark Anthony Cianfrani @markacianfrani",
   "bin": {
-    "figma-vrt": "./bin/run"
+    "figma-vrt": "bin/run"
   },
   "bugs": "https://github.com/markacianfrani/figma-vrt-cli/issues",
   "devDependencies": {
